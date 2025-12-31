@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کاتالوگ خمیردندان مروارید | Pearl Toothpaste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* بک‌گراند محو شده */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(8px) brightness(0.9);
+            opacity: 0.4;
+        }
+        
+        .background-gradient {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(227, 242, 253, 0.8) 0%, rgba(243, 229, 245, 0.8) 100%);
+        }
+        
+        .catalog-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+        }
+        
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            background: transparent;
+        }
+        
+        .image-section {
+            flex: 1;
+            background: rgba(248, 249, 250, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(3px);
+        }
+        
+        /* استایل مخصوص بخش ویدیو */
+        .video-section {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(3px);
+        }
+        
+        .content-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(3px);
+        }
+        
+        .product-image {
+            max-width: 85%;
+            max-height: 70%;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s;
+            background: white;
+            padding: 10px;
+        }
+        
+        /* استایل ویدیو */
+        .video-player {
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: #000;
+        }
+        
+        .video-player video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 30px;
+            right: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border-radius: 0 0 15px 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .video-btn {
+            background: rgba(0, 150, 136, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .video-btn:hover {
+            background: rgba(0, 121, 107, 0.9);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-slider {
+            width: 100px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #009688;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        
+        .video-info {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 152, 0, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .audio-notice {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(33, 150, 243, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 150, 136, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+        
+        .page-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 150, 136, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .auto-turn-notice {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 152, 0, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+            z-index: 100;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 150, 136, 0.2);
+        }
+        
+        .nav-btn {
+            background: rgba(0, 150, 136, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0, 150, 136, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: rgba(0, 121, 107, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .nav-btn:disabled {
+            background: rgba(204, 204, 204, 0.7);
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.6;
+        }
+        
+        .title {
+            color: #009688;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: rgba(248, 249, 250, 0.8);
+            border-right: 4px solid #009688;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        .feature-icon {
+            margin-left: 15px;
+            color: #009688;
+            font-size: 1.4rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(224, 247, 250, 0.9) 0%, rgba(240, 244, 255, 0.9) 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid rgba(0, 150, 136, 0.5);
+            backdrop-filter: blur(3px);
+        }
+        
+        .ingredient-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .ingredient-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        .ingredient-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(224, 247, 250, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #009688;
+            font-size: 1.4rem;
+        }
+        
+        .benefit-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            backdrop-filter: blur(3px);
+        }
+        
+        .buy-button {
+            background: linear-gradient(to right, rgba(0, 150, 136, 0.9), rgba(77, 182, 172, 0.9));
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 150, 136, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 150, 136, 0.4);
+        }
+        
+        .instructions {
+            display: flex;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        
+        .instructions-text {
+            flex: 1;
+            background: rgba(248, 249, 250, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(3px);
+        }
+        
+        /* استایل‌های موبایل - بهینه‌سازی شده */
+        @media (max-width: 1024px) {
+            .page {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            
+            .image-section, .video-section {
+                height: 40vh;
+                min-height: 300px;
+                padding: 20px;
+                justify-content: center;
+            }
+            
+            .content-section {
+                height: 60vh;
+                padding: 25px;
+                overflow-y: auto;
+                justify-content: flex-start;
+                background: rgba(255, 255, 255, 0.98);
+            }
+            
+            .product-image, .video-player {
+                max-width: 95%;
+                max-height: 85%;
+            }
+            
+            .video-player {
+                width: 100%;
+            }
+            
+            .video-controls {
+                bottom: 20px;
+                padding: 10px;
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .volume-slider {
+                width: 80px;
+            }
+            
+            .video-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .video-info, .audio-notice {
+                top: 15px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+            
+            .audio-notice {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+            
+            .feature-list li {
+                font-size: 1rem;
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            .navigation {
+                bottom: 15px;
+                padding: 8px 16px;
+            }
+            
+            .nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .ingredient-grid,
+            .benefit-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .ingredient-card,
+            .benefit-item {
+                padding: 15px;
+            }
+            
+            .instructions {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .auto-turn-notice {
+                top: 15px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            
+            .page-number {
+                top: 15px;
+                left: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .image-overlay {
+                bottom: 15px;
+                right: 15px;
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+            
+            .buy-button {
+                padding: 14px 35px;
+                font-size: 1.1rem;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .content-section::-webkit-scrollbar {
+                width: 5px;
+            }
+            
+            .content-section::-webkit-scrollbar-thumb {
+                background: #009688;
+                border-radius: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .image-section, .video-section {
+                height: 35vh;
+                min-height: 250px;
+                padding: 15px;
+            }
+            
+            .content-section {
+                height: 65vh;
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .feature-list li {
+                font-size: 0.95rem;
+                padding: 10px;
+            }
+            
+            .navigation {
+                bottom: 10px;
+                padding: 6px 12px;
+            }
+            
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .video-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .video-info, .audio-notice {
+                top: 10px;
+                right: 10px;
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+            
+            .audio-notice {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .highlight {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .ingredient-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .volume-slider {
+                width: 60px;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .image-section, .video-section {
+                height: 35vh;
+                min-height: 200px;
+            }
+            
+            .content-section {
+                height: 65vh;
+            }
+        }
+        
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 150, 136, 0.2);
+        }
+        
+        .progress {
+            height: 100%;
+            background: #009688;
+            width: 0%;
+            transition: width 30s linear;
+        }
+        
+        /* بهبود قابلیت لمسی برای موبایل */
+        .touch-optimized {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        /* جلوگیری از زوم روی دوبار کلیک */
+        .page {
+            touch-action: manipulation;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- بک‌گراند محو شده -->
+    <div class="background-overlay">
+        <!-- اینجا آدرس عکس خودتان را قرار دهید -->
+        <img src="https://images.unsplash.com/photo-1629203851892-3abdf90b8e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+             alt="Background" class="background-image">
+        <div class="background-gradient"></div>
+    </div>
+    
+    <div class="catalog-container touch-optimized">
+        <div class="auto-turn-notice" id="timer">ورق خودکار: ۳۰ ثانیه</div>
+        
+        <!-- صفحه 1 -->
+        <div class="page active" id="page1">
+            <div class="page-number">۱</div>
+            
+            <div class="image-section">
+                <img src="https://images.unsplash.com/photo-1629203851126-2f8bbb93ff17?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="خمیردندان مروارید" class="product-image">
+                <div class="image-overlay">
+                    <i class="fas fa-gem"></i> مروارید درخشان
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress1"></div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h1 class="title">خمیردندان مروارید</h1>
+                <p class="subtitle">تجربه‌ای نوین در مراقبت از دندان‌ها</p>
+                
+                <div class="highlight">
+                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555;">
+                        با فناوری نانو ذرات و ترکیبات طبیعی، خمیردندان مروارید نه تنها دندان‌های شما را تمیز می‌کند، 
+                        بلکه سلامت و درخشندگی دائمی را به ارمغان می‌آورد.
+                    </p>
+                </div>
+                
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-star feature-icon"></i>
+                        <span>محصول برتر سال ۱۴۰۲ در حوزه بهداشت دهان و دندان</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-leaf feature-icon"></i>
+                        <span>حاوی ۹۵% مواد طبیعی و گیاهی</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- صفحه 2 -->
+        <div class="page" id="page2">
+            <div class="page-number">۲</div>
+            
+            <div class="image-section">
+                <img src="https://images.unsplash.com/photo-1586486851373-6e4c7d5c1e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="محافظت از دندان" class="product-image">
+                <div class="image-overlay">
+                    <i class="fas fa-shield-alt"></i> محافظت کامل
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress2"></div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h1 class="title">ویژگی‌های منحصر به فرد</h1>
+                
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-shield-virus feature-icon"></i>
+                        <span>محافظت ۲۴ ساعته در برابر باکتری‌های مضر</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-snowflake feature-icon"></i>
+                        <span>خنکی ۱۲ ساعته با عصاره نعنا فلفلی طبیعی</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-tooth feature-icon"></i>
+                        <span>سفیدکنندگی طبیعی بدون آسیب به مینای دندان</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-heart feature-icon"></i>
+                        <span>تقویت لثه‌ها و جلوگیری از خونریزی</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-wind feature-icon"></i>
+                        <span>از بین بردن کامل بوی بد دهان</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- صفحه 3 - صفحه ویدیو -->
+        <div class="page" id="page3">
+            <div class="page-number">۳</div>
+            
+            <div class="video-section">
+                <div class="video-player">
+                    <video id="productVideo" poster="https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <!-- لینک‌های ویدیو جایگزین با کیفیت‌های مختلف -->
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-toothpaste-coming-out-of-a-tube-5191-large.mp4" type="video/mp4">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-toothpaste-coming-out-of-a-tube-5191-medium.mp4" type="video/mp4">
+                        <p>مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند. لطفاً مرورگر خود را به روز کنید.</p>
+                    </video>
+                    <div class="video-info">
+                        <i class="fas fa-play-circle"></i>
+                        <span>ویدیوی معرفی محصول</span>
+                    </div>
+                    <div class="audio-notice" id="audioNotice">
+                        <i class="fas fa-volume-up"></i>
+                        <span>صدا فعال است</span>
+                    </div>
+                    <div class="video-controls">
+                        <button class="video-btn" onclick="togglePlay()" id="playBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="video-btn" onclick="restartVideo()">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="video-btn" onclick="toggleMute()" id="muteBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <input type="range" min="0" max="1" step="0.1" value="0.5" 
+                               class="volume-slider" id="volumeSlider" onchange="changeVolume(this.value)">
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress3"></div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h1 class="title">معرفی محصول</h1>
+                <p class="subtitle">درخشش دندان‌های شما با یک کلیک</p>
+                
+                <div class="highlight">
+                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555;">
+                        در این ویدیو می‌بینید که چگونه خمیردندان مروارید با بافتی نرم و یکدست، 
+                        به راحتی از تیوب خارج شده و تجربه‌ای لذت‌بخش از مسواک زدن ایجاد می‌کند.
+                    </p>
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <h3 style="color: #009688; margin-bottom: 15px;">
+                        <i class="fas fa-video"></i> نکات کلیدی در ویدیو:
+                    </h3>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle feature-icon" style="color: #4CAF50;"></i>
+                            <span>بافت نرم و یکدست خمیردندان</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle feature-icon" style="color: #4CAF50;"></i>
+                            <span>راحت خارج شدن از تیوب</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle feature-icon" style="color: #4CAF50;"></i>
+                            <span>ترکیب یکنواخت با مسواک</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle feature-icon" style="color: #4CAF50;"></i>
+                            <span>کف غنی و مؤثر</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="highlight" style="background: rgba(255, 243, 224, 0.9); border-color: #ff9800;">
+                    <p style="text-align: center; color: #e65100; font-style: italic;">
+                        <i class="fas fa-headphones" style="color: #ff9800;"></i>
+                        <strong>توجه:</strong> روی موبایل ممکن است نیاز به لمس ویدیو برای فعال شدن صدا داشته باشید.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- صفحه 4 -->
+        <div class="page" id="page4">
+            <div class="page-number">۴</div>
+            
+            <div class="image-section">
+                <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="فواید سلامت" class="product-image">
+                <div class="image-overlay">
+                    <i class="fas fa-heartbeat"></i> سلامت دهان
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress4"></div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h1 class="title">فواید سلامتی</h1>
+                
+                <div class="benefit-box">
+                    <div class="benefit-item">
+                        <h3><i class="fas fa-tooth" style="color: #009688;"></i> پیشگیری از پوسیدگی</h3>
+                        <p>کاهش ۹۲٪ احتمال پوسیدگی دندان‌ها</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <h3><i class="fas fa-smile" style="color: #009688;"></i> لبخند درخشان</h3>
+                        <p>سفیدی طبیعی در ۱۴ روز</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <h3><i class="fas fa-shield-alt" style="color: #009688;"></i> محافظت از لثه</h3>
+                        <p>کاهش ۸۵٪ التهاب لثه</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <h3><i class="fas fa-bacteria" style="color: #009688;"></i> ضد باکتری</h3>
+                        <p>حذف ۹۹٫۹٪ باکتری‌های مضر</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p style="text-align: center; font-size: 1.1rem;">
+                        <i class="fas fa-award" style="color: #ff9800;"></i>
+                        مورد تأیید سازمان غذا و دارو و انجمن دندانپزشکی ایران
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- صفحه 5 -->
+        <div class="page" id="page5">
+            <div class="page-number">۵</div>
+            
+            <div class="image-section">
+                <img src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="نحوه استفاده" class="product-image">
+                <div class="image-overlay">
+                    <i class="fas fa-user-md"></i> روش استفاده
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress5"></div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h1 class="title">نحوه استفاده بهینه</h1>
+                
+                <div class="instructions">
+                    <div class="instructions-text">
+                        <h3 style="color: #009688; margin-bottom: 15px;">دستورالعمل دقیق:</h3>
+                        <ol style="padding-right: 15px; font-size: 1.1rem; line-height: 1.8;">
+                            <li>مقدار کمی (به اندازه یک نخود) روی مسواک بگذارید</li>
+                            <li>به مدت ۲ دقیقه کامل مسواک بزنید</li>
+                            <li>بر روی تمام سطوح دندان تمرکز کنید</li>
+                            <li>با آب ولرم کاملاً شستشو دهید</li>
+                            <li>حداقل روزی دو بار استفاده شود</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p style="font-size: 1.1rem; text-align: center;">
+                        <i class="fas fa-lightbulb" style="color: #ff9800;"></i>
+                        برای بهترین نتیجه، بعد از مسواک زدن از نخ دندان استفاده کنید
+                    </p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" class="buy-button">
+                        <i class="fas fa-shopping-cart"></i> خرید محصول
+                    </a>
+                    <p style="margin-top: 12px; color: #666; font-size: 0.95rem;">
+                        مناسب برای تمام اعضای خانواده • دارای گواهینامه‌های بین‌المللی
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ناوبری -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="prevPage()" disabled>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+        let autoTurnTimer;
+        let countdown = 30;
+        let progressInterval;
+        let videoPlayer;
+        
+        // تابع برای نمایش صفحه
+        function showPage(pageNum) {
+            // متوقف کردن ویدیو اگر در حال پخش است
+            if (videoPlayer) {
+                videoPlayer.pause();
+                updatePlayButton(false);
+            }
+            
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.style.transform = 'translateX(100%)';
+            });
+            
+            // نمایش صفحه فعلی
+            const currentPageElem = document.getElementById(`page${pageNum}`);
+            currentPageElem.classList.add('active');
+            currentPageElem.style.transform = 'translateX(0)';
+            
+            // تنظیم تایمر خودکار
+            resetAutoTurnTimer();
+            
+            // به روزرسانی شماره صفحه فعلی
+            currentPage = pageNum;
+            
+            // به روزرسانی دکمه‌ها
+            updateNavigationButtons();
+            
+            // ریست کردن تمام progress barها
+            document.querySelectorAll('.progress').forEach(bar => {
+                bar.style.width = '0%';
+            });
+            
+            // شروع progress bar صفحه فعلی
+            startProgressBar(pageNum);
+            
+            // اگر صفحه ۳ است، ویدیو را آماده کن
+            if (pageNum === 3) {
+                setTimeout(initializeVideo, 500);
+            }
+        }
+        
+        // راه‌اندازی ویدیو
+        function initializeVideo() {
+            videoPlayer = document.getElementById('productVideo');
+            if (videoPlayer) {
+                // تنظیم صدا
+                videoPlayer.muted = false;
+                videoPlayer.volume = 0.5;
+                
+                // سعی در پخش خودکار با صدا
+                const playPromise = videoPlayer.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        updatePlayButton(true);
+                        updateAudioNotice(true);
+                    }).catch(error => {
+                        console.log('اتوپلی با صدا با خطا مواجه شد:', error);
+                        // روی برخی مرورگرها، پخش خودکار با صدا مجاز نیست
+                        videoPlayer.muted = true;
+                        videoPlayer.play().then(() => {
+                            updatePlayButton(true);
+                            updateAudioNotice(false);
+                        });
+                    });
+                }
+                
+                // رویدادها برای به‌روزرسانی دکمه‌ها
+                videoPlayer.addEventListener('play', () => updatePlayButton(true));
+                videoPlayer.addEventListener('pause', () => updatePlayButton(false));
+                videoPlayer.addEventListener('ended', () => updatePlayButton(false));
+                videoPlayer.addEventListener('volumechange', () => {
+                    updateMuteButton(videoPlayer.muted);
+                    updateAudioNotice(!videoPlayer.muted);
+                });
+            }
+        }
+        
+        // کنترل پخش ویدیو
+        function togglePlay() {
+            if (videoPlayer) {
+                if (videoPlayer.paused) {
+                    videoPlayer.play();
+                    updatePlayButton(true);
+                } else {
+                    videoPlayer.pause();
+                    updatePlayButton(false);
+                }
+            }
+        }
+        
+        function restartVideo() {
+            if (videoPlayer) {
+                videoPlayer.currentTime = 0;
+                videoPlayer.play();
+                updatePlayButton(true);
+            }
+        }
+        
+        function toggleMute() {
+            if (videoPlayer) {
+                videoPlayer.muted = !videoPlayer.muted;
+                updateMuteButton(videoPlayer.muted);
+                updateAudioNotice(!videoPlayer.muted);
+            }
+        }
+        
+        function changeVolume(value) {
+            if (videoPlayer) {
+                videoPlayer.volume = parseFloat(value);
+                videoPlayer.muted = (value == 0);
+                updateMuteButton(videoPlayer.muted);
+                updateAudioNotice(!videoPlayer.muted);
+            }
+        }
+        
+        function updatePlayButton(isPlaying) {
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) {
+                playBtn.innerHTML = isPlaying ? 
+                    '<i class="fas fa-pause"></i>' : 
+                    '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        function updateMuteButton(isMuted) {
+            const muteBtn = document.getElementById('muteBtn');
+            if (muteBtn) {
+                muteBtn.innerHTML = isMuted ? 
+                    '<i class="fas fa-volume-mute"></i>' : 
+                    '<i class="fas fa-volume-up"></i>';
+            }
+        }
+        
+        function updateAudioNotice(isAudioOn) {
+            const audioNotice = document.getElementById('audioNotice');
+            if (audioNotice) {
+                audioNotice.innerHTML = isAudioOn ? 
+                    '<i class="fas fa-volume-up"></i><span>صدا فعال است</span>' : 
+                    '<i class="fas fa-volume-mute"></i><span>صدا غیرفعال است</span>';
+                audioNotice.style.background = isAudioOn ? 
+                    'rgba(33, 150, 243, 0.9)' : 'rgba(244, 67, 54, 0.9)';
+            }
+        }
+        
+        // شروع progress bar برای صفحه
+        function startProgressBar(pageNum) {
+            const progressBar = document.getElementById(`progress${pageNum}`);
+            if (progressBar) {
+                progressBar.style.width = '0%';
+                progressBar.style.transition = 'width 30s linear';
+                setTimeout(() => {
+                    progressBar.style.width = '100%';
+                }, 50);
+            }
+        }
+        
+        // به روزرسانی دکمه‌های ناوبری
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+        
+        // تایمر برای ورق زدن خودکار
+        function resetAutoTurnTimer() {
+            clearInterval(autoTurnTimer);
+            countdown = 30;
+            updateTimerDisplay();
+            
+            autoTurnTimer = setInterval(() => {
+                countdown--;
+                updateTimerDisplay();
+                
+                if (countdown <= 0) {
+                    if (currentPage < totalPages) {
+                        nextPage();
+                    } else {
+                        showPage(1);
+                    }
+                }
+            }, 1000);
+        }
+        
+        // به روزرسانی نمایش تایمر
+        function updateTimerDisplay() {
+            document.getElementById('timer').textContent = `ورق خودکار: ${countdown} ثانیه`;
+        }
+        
+        // صفحه بعد
+        function nextPage() {
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            }
+        }
+        
+        // صفحه قبلی
+        function prevPage() {
+            if (currentPage > 1) {
+                showPage(currentPage - 1);
+            }
+        }
+        
+        // قابلیت ورق زدن با کلیدهای کیبورد
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Right') {
+                prevPage();
+            } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+                nextPage();
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (currentPage === 3 && videoPlayer) {
+                    togglePlay();
+                } else {
+                    if (currentPage < totalPages) {
+                        nextPage();
+                    } else {
+                        showPage(1);
+                    }
+                }
+            }
+        });
+        
+        // قابلیت ورق زدن با سوایپ روی موبایل
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        
+        document.querySelector('.catalog-container').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        document.querySelector('.catalog-container').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const verticalThreshold = 30;
+            
+            if (Math.abs(touchEndX - touchStartX) > Math.abs(touchEndY - touchStartY) + verticalThreshold) {
+                if (touchStartX - touchEndX > swipeThreshold) {
+                    nextPage();
+                } else if (touchEndX - touchStartX > swipeThreshold) {
+                    prevPage();
+                }
+            }
+        }
+        
+        // تنظیم ارتفاع داینامیک برای موبایل
+        function setMobileHeights() {
+            if (window.innerWidth <= 1024) {
+                const windowHeight = window.innerHeight;
+                const imageHeight = Math.min(350, windowHeight * 0.4);
+                const contentHeight = windowHeight - imageHeight;
+                
+                document.querySelectorAll('.image-section, .video-section').forEach(section => {
+                    section.style.height = `${imageHeight}px`;
+                    section.style.minHeight = `${imageHeight}px`;
+                });
+                
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.height = `${contentHeight}px`;
+                    section.style.maxHeight = `${contentHeight}px`;
+                });
+            }
+        }
+        
+        // راه‌اندازی اولیه
+        window.onload = function() {
+            showPage(1);
+            setMobileHeights();
+            
+            // بهبود عملکرد اسکرول در موبایل
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.addEventListener('touchmove', (e) => {}, { passive: true });
+            });
+        };
+        
+        // تنظیم مجدد layout هنگام تغییر سایز
+        window.addEventListener('resize', () => {
+            setMobileHeights();
+        });
+        
+        // جلوگیری از اسکرول صفحه هنگام اسکرول در محتوا
+        document.addEventListener('wheel', (e) => {
+            const activeSection = document.querySelector('.content-section.active');
+            
+            if (activeSection) {
+                const isAtTop = activeSection.scrollTop === 0;
+                const isAtBottom = activeSection.scrollHeight - activeSection.scrollTop === activeSection.clientHeight;
+                
+                if ((e.deltaY < 0 && isAtTop) || (e.deltaY > 0 && isAtBottom)) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+        
+        // توقف تایمر هنگام تعامل کاربر
+        document.querySelectorAll('.nav-btn, .buy-button, .feature-list li, .video-btn, .volume-slider').forEach(element => {
+            element.addEventListener('click', () => {
+                clearInterval(autoTurnTimer);
+                setTimeout(resetAutoTurnTimer, 5000);
+            });
+        });
+        
+        // ریست تایمر هنگام لمس صفحه
+        document.addEventListener('touchstart', () => {
+            clearInterval(autoTurnTimer);
+            setTimeout(resetAutoTurnTimer, 5000);
+        }, { passive: true });
+    </script>
+</body>
+</html>
